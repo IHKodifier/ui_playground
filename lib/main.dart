@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ui_playground/data.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,17 +33,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  // void _incrementCounter() {
-  //   setState(() {
-
-  //     _counter++;
-  //   });
-  // }
+  int  _selectedPage = 0;
 
   @override
   Widget build(BuildContext context) {
+    final pageController = PageController(
+      initialPage: _selectedPage,
+    );
+
+    final pageView = PageView(
+      controller: pageController,
+      scrollDirection: Axis.horizontal,
+      // physics: ScrollPhysics(),
+           onPageChanged: (value) => setState(() {
+        _selectedPage = value;
+      }),
+
+      children: const [
+        MaintenancesPage(),
+        FuelStopsPage(),
+        LogBookPage(),
+      ],
+    );
     final state = vehicle;
     return Scaffold(
       body: CustomScrollView(
@@ -83,15 +95,58 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-       
-       SliverToBoxAdapter(child: Container(
-        // height: 100,
-        color: Colors.pink,
-        width: MediaQuery.of(context).size.width/2,
-        child: Text('${MediaQuery.of(context).size.width.toString()}'),)),
-       
+          SliverToBoxAdapter(
+            child: Container(
+              height: 600,
+              color: Colors.pink,
+              width: MediaQuery.of(context).size.width / 2,
+              child: pageView,
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class MaintenancesPage extends ConsumerWidget {
+  const MaintenancesPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      // height: 50,
+      width: 50,
+      color: Colors.pink,
+      child: Text('Maintenances'),
+    );
+  }
+}
+
+class FuelStopsPage extends ConsumerWidget {
+  const FuelStopsPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      height: 50,
+      width: 50,
+      color: Colors.blue,
+      child: Text('Fuel Stops'),
+    );
+  }
+}
+
+class LogBookPage extends ConsumerWidget {
+  const LogBookPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      height: 50,
+      width: 50,
+      color: Colors.red,
+      child: Text('Log Book'),
     );
   }
 }
