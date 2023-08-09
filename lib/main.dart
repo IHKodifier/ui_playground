@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final pageView = PageView(
       controller: pageController,
       scrollDirection: Axis.horizontal,
-      // physics: ScrollPhysics(),
+      physics: PageScrollPhysics(),
            onPageChanged: (value) => setState(() {
         _selectedPage = value;
       }),
@@ -118,7 +118,7 @@ class MaintenancesPage extends ConsumerWidget {
       // height: 50,
       width: 50,
       color: Colors.pink,
-      child: Text('Maintenances'),
+      child: Center(child: Text('Maintenances')),
     );
   }
 }
@@ -132,7 +132,7 @@ class FuelStopsPage extends ConsumerWidget {
       height: 50,
       width: 50,
       color: Colors.blue,
-      child: Text('Fuel Stops'),
+      child: Center(child: Text('Fuel Stops')),
     );
   }
 }
@@ -146,7 +146,7 @@ class LogBookPage extends ConsumerWidget {
       height: 50,
       width: 50,
       color: Colors.red,
-      child: Text('Log Book'),
+      child: Center(child: Text('Log Book')),
     );
   }
 }
